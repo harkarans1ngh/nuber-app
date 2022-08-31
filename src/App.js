@@ -1,4 +1,5 @@
 import logo from "./logo.svg";
+import { Auth } from 'aws-amplify';
 import "@aws-amplify/ui-react/styles.css";
 import { Authenticator } from "@aws-amplify/ui-react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
@@ -259,6 +260,18 @@ export default function App() {
   return (
     <Authenticator formFields={formFields} components={components}>
       {({ signOut }) => <button onClick={signOut}>Sign out</button>}
+      
+      const user = await auth.currentAuthenticatedUser();
+
+      groupArray = user.signInUserSession.accessToken.payload["cognito:groups"]
+
+      if (groupArray[0]== "driver"){
+        console.log("driver is here")
+      }else{
+        console.log("rider is here")
+      }
+      
+      
     </Authenticator>
   );
 }
