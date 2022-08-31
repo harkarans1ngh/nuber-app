@@ -301,13 +301,11 @@ function App() {
         <div className="App" style={mystyle}>
           <h1>WELCOME TO NUBER</h1>
           <h2>{user.username}</h2>
-          <h2>You are registered as a : {myUser}</h2>
           <p>
               {(() => {
                 switch (myUser) {
-                  case "driver":   return "#FF0000";
-                
-                  default:      return "#FFFFFF";
+                  case "driver":   return "DRIVER";
+                  default:      return "RIDER";
                 }
               })()}
             </p>
