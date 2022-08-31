@@ -5,12 +5,11 @@ import { Authenticator } from "@aws-amplify/ui-react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { Text, useTheme } from "@aws-amplify/ui-react";
 import {
-  withAuthenticator,
   Button,
   Heading,
   Image,
   View,
-  Card,
+  Card
 } from "@aws-amplify/ui-react";
 
 import "@aws-amplify/ui-react/styles.css";
@@ -257,11 +256,66 @@ const formFields = {
 };
 
 
-export default function App() {
+export const getCurrentUser = async () => {
+  
+    const userInfo = await Auth.currentAuthenticatedUser({bypassCache:true})
+    if (userInfo){
+      return userInfo.signInUserSession.idToken.payload["cognito:groups"][0];
+    }
+}
+
+
+var myUser;
+
+function saveValue(value){
+  myUser = value
+  console.log(value)
+  return value
+  
+}
+
+function App() {
+
+  const mystyle = {
+    color: "white",
+    backgroundColor: "DodgerBlue",
+    textAlign: "center",
+    padding: "10px",
+    fontFamily: "Arial",
+    margin: "auto",
+  width: "50%",
+  border: "3px solid green"
+  };
+
+
+  getCurrentUser().then(value => {
+    saveValue(value) 
+  })
+
   return (
+
     <Authenticator formFields={formFields} components={components}>
-      {({ signOut }) => <button onClick={signOut}>Sign out</button>}
-      
+    
+      {({ signOut, user }) => (
+
+        <div className="App" style={mystyle}>
+          <h1>WELCOME TO NUBER</h1>
+          <h2>{user.username}</h2>
+          <h2>You are registered as a : {myUser}</h2>
+          <p>
+              {(() => {
+                switch (myUser) {
+                  case "driver":   return "#FF0000";
+                
+                  default:      return "#FFFFFF";
+                }
+              })()}
+            </p>
+          <button onClick={signOut}>Sign out</button>
+        </div>
+      )}
     </Authenticator>
   );
 }
+
+export default App;
