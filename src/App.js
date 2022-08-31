@@ -256,14 +256,15 @@ const formFields = {
   },
 };
 
+const user = await auth.currentAuthenticatedUser(); 
+groupArray = user.signInUserSession.accessToken.payload["cognito:groups"];
+
 export default function App() {
   return (
     <Authenticator formFields={formFields} components={components}>
       {({ signOut }) => <button onClick={signOut}>Sign out</button>}
       
-      const user = await auth.currentAuthenticatedUser(); 
-      groupArray = user.signInUserSession.accessToken.payload["cognito:groups"];
-      console.log(groupArray);
+      console.log(groupArray)
       
     </Authenticator>
   );
