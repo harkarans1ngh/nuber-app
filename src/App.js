@@ -4,6 +4,10 @@ import "@aws-amplify/ui-react/styles.css";
 import { Authenticator } from "@aws-amplify/ui-react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { Text, useTheme } from "@aws-amplify/ui-react";
+import { Storage } from "@aws-amplify/storage"
+import Upload from './upload';
+
+
 import {
   Button,
   Heading,
@@ -22,7 +26,7 @@ const components = {
       <View textAlign="center" padding={tokens.space.large}>
         <Image
           alt="Amplify logo"
-          src="https://docs.amplify.aws/assets/logo-dark.svg"
+          src={require('./app-logo.png')}
         />
       </View>
     );
@@ -34,7 +38,7 @@ const components = {
     return (
       <View textAlign="center" padding={tokens.space.large}>
         <Text color={tokens.colors.neutral[80]}>
-          &copy; All Rights Reserved
+          &copy; Nuber - Harkaran Singh
         </Text>
       </View>
     );
@@ -301,14 +305,14 @@ function App() {
         <div className="App" style={mystyle}>
           <h1>WELCOME TO NUBER</h1>
           <h2>{user.username}</h2>
-          <p>
+          
               {(() => {
                 switch (myUser) {
-                  case "driver":   return "DRIVER";
+                  case "driver":   return <Upload/>;
                   default:      return "RIDER";
                 }
               })()}
-            </p>
+           
           <button onClick={signOut}>Sign out</button>
         </div>
       )}
